@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <title>Waves Keeper Vault Decryptor</title>
+</head>
+<body>
+    <script src="vendor/waves-crypto.js"></script>
+
+    <div>
+        <h1>Waves Keeper Vault Decryptor</h1>
+        <p>
+            Source code of this page is available on GitHub: <a href="https://github.com/waves-keeper/vault-decryptor" target="_blank">github.com/waves-keeper/vault-decryptor</a>
+        </p>
+        <p>
+            <label for="encrypted">Encrypted vault data:</label><br/>
+            <textarea id="encrypted" cols="80" rows="10" autocomplete="off" placeholder="Paste your vault data here"></textarea>
+        </p>
+        <p>
+            <label for="password">Password:</label><br/>
+            <input type="password" id="password" autocomplete="off" placeholder="Keeper password"/>
+        </p>
+        <p>
+            <button id="btn-decrypt">Decrypt</button>
+        </p>
+        <p>
+            <label for="decrypted">Decrypted source:</label><br/>
+            <textarea id="decrypted" cols="80" rows="20" autocomplete="off" disabled></textarea>
+        </p>
+    </div>
+
+    <script>
+        const encrypted = document.getElementById('encrypted');
+        const password = document.getElementById('password');
+        const btnDecrypt = document.getElementById('btn-decrypt');
+        const decrypted = document.getElementById('decrypted');
+
+        const decrypt = function() {
+            decrypted.innerHTML =
+                JSON.stringify(
+                    JSON.parse(
+                        WavesCrypto.decryptSeed(encrypted.value, password.value)
+                    ),
+                    null,
+                    2
+                );
+        }
+
+        btnDecrypt.addEventListener('click', decrypt);
+    </script>
+</body>
+</html>
